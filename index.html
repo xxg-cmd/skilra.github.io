@@ -1,7 +1,272 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM-Guided Task- and Affordance-Level Exploration in Reinforcement Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS 样式将放置在这里 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        /* 顶部标题区域 */
+        header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            color: #1a73e8;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+
+        .authors, .affiliations {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .authors sup, .affiliations sup {
+            font-size: 0.7em;
+            vertical-align: super;
+        }
+
+        /* 链接按钮 */
+        .link-container {
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #555;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* 主要内容网格布局 */
+        main {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .grid-item {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #fff;
+            text-align: left;
+        }
+
+        /* 左上块 */
+        .item1 {
+            grid-row: 1 / 2;
+            grid-column: 1 / 2;
+        }
+
+        .scene-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .scene-text span {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .figure-scene {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* 右上块 */
+        .item2 {
+            grid-row: 1 / 2;
+            grid-column: 2 / 3;
+        }
+
+        .item2 h3 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+
+        /* 过渡块 */
+        .transition-item {
+            grid-row: 2 / 3;
+            grid-column: 1 / 3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .transition-block {
+            display: flex;
+            align-items: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+
+        /* 右下块 */
+        .item4 {
+            grid-row: 3 / 4;
+            grid-column: 2 / 3;
+        }
+
+        /* 左下块 */
+        .item5 {
+            grid-row: 3 / 4;
+            grid-column: 1 / 2;
+        }
+
+        /* 提示容器样式 */
+        .prompt-container {
+            background-color: lightyellow;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .prompt-container p {
+            margin: 0 0 10px;
+            font-size: 0.9em;
+        }
+
+        .prompt-container strong {
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* 模态样式 */
+        .modalities h4 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .modalities p {
+            font-size: 0.9em;
+            margin: 0 0 5px 20px;
+        }
+
+        .modalities ul {
+            list-style-type: disc;
+            margin-left: 40px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
 <body>
-<h1>hello word</h1>
-<p> nihao</p>
+    <header>
+        <h1>LLM-Guided Task- and Affordance-Level Exploration in Reinforcement Learning</h1>
+        <h2>ICRA 2026</h2>
+        <p class="authors">Jelle Luijkx<sup>1</sup>, Runyu Ma<sup>1</sup>, Zlatan Ajanović<sup>2</sup>, Jens Kober<sup>1</sup></p>
+        <p class="affiliations"><sup>1</sup>Delft University of Technology, <sup>2</sup>RWTH Aachen University</p>
+        <div class="link-container">
+            <a href="#" class="btn btn-arxiv"><i class="fas fa-file-pdf"></i> arXiv</a>
+            <a href="#" class="btn btn-code"><i class="fab fa-github"></i> Code</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="grid-item item1">
+            <figure>
+                <div class="scene-text">Put the chocolate box in the cupboard <span>↓</span></div>
+                <img src="https://via.placeholder.com/400x300.png?text=Robot+Scene" alt="Robot scene with chocolate box and cupboard" class="figure-scene">
+            </figure>
+        </div>
+
+        <div class="grid-item item2">
+            <h3>Task level plan p<sub>1:n</sub></h3>
+            <pre><code>robot.pick("chocolate_box")
+robot.transport(
+    "chocolate_box",
+    "cupboard",
+)</code></pre>
+        </div>
+
+        <div class="grid-item transition-item">
+            <div class="transition-block"><span class="arrow">↑</span> LLM <span class="arrow">↓</span></div>
+        </div>
+
+        <div class="grid-item item4">
+            <h3>Affordance identifier prompt M</h3>
+            <div class="prompt-container">
+                <p>Your task is to identify the geometric options available to execute these skills...</p>
+                <p><strong>Knowledge:</strong> Objects: #input...</p>
+                <p>Possible ways for the Instruction: #input robot to pick/place object Response: #output class Object: ... Rules: ....</p>
+            </div>
+            <div class="modalities">
+                <h4>Picking modalities l<sup>f</sup><sub>1:n</sub></h4>
+                <p>pick the box</p>
+                <ul>
+                    <li>from the top</li>
+                    <li>from the side</li>
+                </ul>
+                <h4>Transporting modalities l<sup>s</sup><sub>1:n</sub></h4>
+                <p>place the box</p>
+                <ul>
+                    <li>vertically in the cupboard</li>
+                    <li>horizontally in the cupboard</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="grid-item item5">
+            <h3>Task planner prompt T</h3>
+            <div class="prompt-container">
+                <p>Convert a sequence of language instructions into a sequence of robot code commands...</p>
+                <p><strong>Knowledge:</strong> Objects: #input...</p>
+                <p>Actionable sub-tasks: ... Instruction: #input class Object: ... Response: #output Examples: ... Rules: ....</p>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
